@@ -1,0 +1,145 @@
+---
+# Upgrade system tasks
+# https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/apt_module.html
+- name: Upgrade all packages
+  ansible.builtin.apt:
+    name: "*"
+    state: latest
+    update_cache: yes
+
+- name: Autoremove unneeded packages installed as dependencies
+  ansible.builtin.apt:
+    autoremove: yes
+
+- name: Install required packages
+  ansible.builtin.apt:
+    name: "{{ apt_packages }}"
+    state: latest
+
+# Create and deploy webservice container tasks
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
+- name: Create webserver temporary directory
+  ansible.builtin.file:
+    path: "{{ webserver_path }}"
+    state: directory
+  register: wm_temp
+
+# https://docs.ansible.com/ansible/latest/collections/community/general/htpasswd_module.html
+- name: Add a user to a password file and ensure permissions are set
+  community.general.htpasswd:
+    path: "{{ webserver_path }}/.creds"
+    name: "{{ username }}"
+    password: "{{ password }}"
+    owner: root
+    group: root
+    mode: 0644
+
+# https://docs.ansible.com/ansible/latest/collections/community/crypto/openssl_privatekey_module.html
+- name: Generate an OpenSSL private RSA key
+  community.crypto.openssl_privatekey:
+    path: "{{ webserver_path }}/{{ server_hostname }}.key"
+    size: "{{ key_size }}"
+    passphrase: "{{ passphrase }}"
+    cipher: auto
+    type: "{{ key_type }}"
+    mode: 0600
+  register: privatekey
+
+# https://docs.ansible.com/ansible/latest/collections/community/crypto/openssl_csr_module.html
+- name: Generate an OpenSSL Certificate Signing Request with Subject information
+  community.crypto.openssl_csr:
+    path: "{{ webserver_path }}/{{ server_hostname }}.csr"
+    privatekey_path: "{{ webserver_path }}/{{ server_hostname }}.key"
+    country_name: "ES"
+    state_or_province_name: "León"
+    locality_name: "León"
+    organization_name: "Programa Avanzado en DevOps y Cloud"
+    organizational_unit_name: "DevOps & Cloud"
+    common_name: "{{ server_hostname }}"
+    mode: 0644
+  register: csr
+  when: privatekey is defined
+
+# https://docs.ansible.com/ansible/latest/collections/community/crypto/x509_certificate_module.html
+- name: Generate a Self Signed OpenSSL certificate
+  community.crypto.x509_certificate:
+    path: "{{ webserver_path }}/{{ server_hostname }}.crt"
+    privatekey_path: "{{ webserver_path }}/{{ server_hostname }}.key"
+    csr_path: "{{ webserver_path }}/{{ server_hostname }}.csr"
+    provider: selfsigned
+    selfsigned_not_after: "+365d"
+    mode: 0644
+  when: csr is defined
+
+# https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_loops.html
+- name: Copy container templates in webserver temporary directory
+  ansible.builtin.template:
+    src: "{{ item.src_path }}/{{ item.file_name }}.j2"
+    dest: "{{ webserver_path }}/{{ item.file_name }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ container_templates }}"
+
+# https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_image_module.html
+- name: Build a podman image for webserver/httpd
+  containers.podman.podman_image:
+    name: "{{ acr_url }}{{ custom_image }}"
+    tag: "{{ tag_image }}"
+    path: "{{ webserver_path }}"
+    username: "{{ acr_username }}"
+    password: "{{ acr_password }}"
+    build:
+      cache: no
+      force_rm: yes
+      format: oci
+  register: ws_image
+
+- name: Build and push an image webserver/httpd using username and password
+  containers.podman.podman_image:
+    name: "{{ acr_url }}{{ custom_image }}:{{ tag_image }}"
+    push: yes
+    username: "{{ acr_username }}"
+    password: "{{ acr_password }}"
+  when: ws_image is defined
+
+# https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_container_module.html
+- name: Create a webserver/httpd container with systemd service file generated
+  containers.podman.podman_container:
+    name: web
+    image: "{{ acr_url }}{{ custom_image }}:{{ tag_image }}"
+    state: started
+    recreate: yes
+    expose:
+      - 8080
+    publish:
+      - 8080:443
+    generate_systemd:
+      path: "{{ container_web_service }}"
+      restart_policy: always
+      time: 60
+      names: true
+      container_prefix: "{{ container_prefix }}"
+      env:
+        DEPLOY_DATE: "{{ ansible_date_time.iso8601 }}"
+        SERVER_NAME: "{{ server_hostname }}"
+        ENV_TYPE: "Production"
+
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/uri_module.html
+- name: Check webserver
+  ansible.builtin.uri:
+    url: "https://{{ webservice_pip }}:8080"
+    user: "{{ username }}"
+    password: "{{ password }}"
+    method: GET
+    force_basic_auth: true
+    validate_certs: false
+    status_code: 200
+  ignore_errors: true
+
+- name: Remove the webserver temporary directory
+  ansible.builtin.file:
+    path: "{{ wm_temp.path }}"
+    state: absent
+  when: wm_temp.path is defined
+...

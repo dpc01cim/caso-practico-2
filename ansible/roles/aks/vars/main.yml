@@ -1,0 +1,49 @@
+---
+# vars file for SonarQube
+
+# The k8s Deployment yaml vars.
+deployment:
+  name: sonarqube
+  image: "{{ acr_url }}/library/sonarqube:{{ tag_image }}"
+  replicas: 1
+  terminationGracePeriodSeconds: 15
+  containers:
+    resources:
+      cpu: 1000m
+      memory: 2Gi
+    limits:
+      cpu: 2000m
+      memory: 3Gi
+    ports:
+      containerPort: 9000
+      name: sonarqube
+    env:
+      username: sonar
+      url: jdbc:postgresql://postgres:5432/sonarqube
+  initContainers:
+    name: fix-the-volume-permission
+    image: busybox
+    volumeMounts:
+      name: sonar
+      mountPath: /opt/sonarqube
+
+# The k8s Service yaml vars.
+svc:
+  name: sonarqube
+  ports:
+    name: sonar
+    port: 1080
+    protocol: TCP
+    targetPort: 9000
+  type: LoadBalancer
+
+# The k8s PersistentVolumeClaim yaml vars.
+pvc:
+  name: sonar
+  accessModes: ReadWriteOnce
+  storageClassName: default
+  storage: 5Gi
+
+# k8s Secrets YAML info.
+# Encrypted in Base64: echo -n 'example' | base64
+...

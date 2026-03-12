@@ -1,0 +1,32 @@
+---
+# defaults file for aks
+
+# APT packages necessary to images (SonarQube).
+apt_packages:
+  - python3-pip
+  - podman
+
+# Python necessary packages for k8s.
+pip_packages:
+  - pyyaml
+  - kubernetes
+  - openshift
+
+# Path in which k8s deploy.
+k8s_path: "/opt/sonar"
+
+# Template k8s' name *.yaml.
+k8s_templates:
+  - acr-secret.yml
+  - sonar-data.yml
+  - sonar-extensions.yml
+  - postgres-secret.yml
+  - postgres-pvc.yml
+  - postgres-service.yml
+  - postgres-deployment.yml
+  - sonar-service.yml
+  - sonar-deployment.yml
+
+# The k8s namespace.
+k8s_namespace: "sonarqube"
+...

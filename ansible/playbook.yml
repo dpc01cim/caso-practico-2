@@ -1,0 +1,33 @@
+---
+# Playbook for install the Container Registry, Webserver, SonarQube in Azure AKS and PostgreSQL like database.
+
+# Install WS
+- name: Deploy ACR
+  hosts: acr
+  gather_facts: true
+  become: true
+  roles:
+    - acr
+  tags:
+    - registry
+
+# Install Web Service in virtual machine (VM Azure)
+- name: Install WS
+  hosts: vm
+  gather_facts: true
+  become: true
+  roles:
+    - vm
+  tags:
+    - webservice
+
+# Install AKS (k8s SonarQube)
+- name: Install AKS [k8s SonarQube]
+  hosts: aks
+  gather_facts: true
+  become: true
+  roles:
+    - aks
+  tags:
+    - k8s
+...

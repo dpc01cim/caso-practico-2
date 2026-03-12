@@ -1,0 +1,612 @@
+unir@unir:~/terraform$ terraform destroy --auto-approve
+var.subscription_id
+  Enter a value: 6582d274-292d-4e52-bbf9-4e27f466a0ba
+
+tls_private_key.ssh_key: Refreshing state... [id=2c614e157416827f91763e1074aa511b4f563ff2]
+azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources]
+azurerm_public_ip.webservice_pip: Refreshing state... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/publicIPAddresses/webservice-pip]
+azurerm_container_registry.acr: Refreshing state... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.ContainerRegistry/registries/dpccontainerregistry]
+azurerm_virtual_network.vnet: Refreshing state... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/virtualNetworks/vnet]
+azurerm_network_security_group.webservice_nsg: Refreshing state... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkSecurityGroups/webservice-nsg]
+azurerm_kubernetes_cluster.aks: Refreshing state... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.ContainerService/managedClusters/aks]
+azurerm_subnet.subnet: Refreshing state... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet]
+azurerm_network_interface.webservice_vnic: Refreshing state... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkInterfaces/webservice-vnic]
+azurerm_network_interface_security_group_association.webservice_nisga: Refreshing state... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkInterfaces/webservice-vnic|/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkSecurityGroups/webservice-nsg]
+azurerm_linux_virtual_machine.webservice: Refreshing state... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Compute/virtualMachines/webservice]
+azurerm_role_assignment.ra: Refreshing state... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.ContainerRegistry/registries/dpccontainerregistry/providers/Microsoft.Authorization/roleAssignments/0ae20b58-ef75-e24d-f265-1fd13ee8a48f]
+local_file.kubeconfig: Refreshing state... [id=73bdf7aa6c2729387c11a3a58ee4ce847f52d243]
+local_file.ansible_inventory: Refreshing state... [id=09e301fee064fc4006032d651d507ed79f24fcea]
+local_file.tf_ansible_vars: Refreshing state... [id=6ee369ad94da40efbbf77d2023e0c46c0e7c88b7]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # azurerm_container_registry.acr will be destroyed
+  - resource "azurerm_container_registry" "acr" {
+      - admin_enabled                 = true -> null
+      - admin_password                = (sensitive value) -> null
+      - admin_username                = "dpccontainerregistry" -> null
+      - anonymous_pull_enabled        = false -> null
+      - data_endpoint_enabled         = false -> null
+      - encryption                    = [] -> null
+      - export_policy_enabled         = true -> null
+      - id                            = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.ContainerRegistry/registries/dpccontainerregistry" -> null
+      - location                      = "spaincentral" -> null
+      - login_server                  = "dpccontainerregistry.azurecr.io" -> null
+      - name                          = "dpccontainerregistry" -> null
+      - network_rule_bypass_option    = "AzureServices" -> null
+      - network_rule_set              = [] -> null
+      - public_network_access_enabled = true -> null
+      - quarantine_policy_enabled     = false -> null
+      - resource_group_name           = "rg-resources" -> null
+      - retention_policy_in_days      = 0 -> null
+      - sku                           = "Basic" -> null
+      - tags                          = {
+          - "environment" = "casopractico2"
+        } -> null
+      - trust_policy_enabled          = false -> null
+      - zone_redundancy_enabled       = false -> null
+    }
+
+  # azurerm_kubernetes_cluster.aks will be destroyed
+  - resource "azurerm_kubernetes_cluster" "aks" {
+      - cost_analysis_enabled               = false -> null
+      - current_kubernetes_version          = "1.33.6" -> null
+      - dns_prefix                          = "aks-practica-2" -> null
+      - fqdn                                = "aks-practica-2-jd2jp37z.hcp.spaincentral.azmk8s.io" -> null
+      - id                                  = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.ContainerService/managedClusters/aks" -> null
+      - kube_admin_config                   = (sensitive value) -> null
+      - kube_config                         = (sensitive value) -> null
+      - kube_config_raw                     = (sensitive value) -> null
+      - kubernetes_version                  = "1.33" -> null
+      - local_account_disabled              = false -> null
+      - location                            = "spaincentral" -> null
+      - name                                = "aks" -> null
+      - node_os_upgrade_channel             = "NodeImage" -> null
+      - node_resource_group                 = "MC_rg-resources_aks_spaincentral" -> null
+      - node_resource_group_id              = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/MC_rg-resources_aks_spaincentral" -> null
+      - oidc_issuer_enabled                 = false -> null
+      - portal_fqdn                         = "aks-practica-2-jd2jp37z.portal.hcp.spaincentral.azmk8s.io" -> null
+      - private_cluster_enabled             = false -> null
+      - private_cluster_public_fqdn_enabled = false -> null
+      - resource_group_name                 = "rg-resources" -> null
+      - role_based_access_control_enabled   = true -> null
+      - run_command_enabled                 = true -> null
+      - sku_tier                            = "Standard" -> null
+      - support_plan                        = "KubernetesOfficial" -> null
+      - tags                                = {
+          - "environment" = "casopractico2"
+        } -> null
+      - workload_identity_enabled           = false -> null
+        # (8 unchanged attributes hidden)
+
+      - default_node_pool {
+          - auto_scaling_enabled          = false -> null
+          - fips_enabled                  = false -> null
+          - host_encryption_enabled       = false -> null
+          - kubelet_disk_type             = "OS" -> null
+          - max_count                     = 0 -> null
+          - max_pods                      = 110 -> null
+          - min_count                     = 0 -> null
+          - name                          = "nodepool" -> null
+          - node_count                    = 1 -> null
+          - node_labels                   = {} -> null
+          - node_public_ip_enabled        = false -> null
+          - only_critical_addons_enabled  = false -> null
+          - orchestrator_version          = "1.33" -> null
+          - os_disk_size_gb               = 128 -> null
+          - os_disk_type                  = "Managed" -> null
+          - os_sku                        = "Ubuntu" -> null
+          - scale_down_mode               = "Delete" -> null
+          - tags                          = {} -> null
+          - type                          = "VirtualMachineScaleSets" -> null
+          - ultra_ssd_enabled             = false -> null
+          - vm_size                       = "Standard_D2s_v3" -> null
+          - zones                         = [] -> null
+            # (10 unchanged attributes hidden)
+
+          - upgrade_settings {
+              - drain_timeout_in_minutes      = 0 -> null
+              - max_surge                     = "10%" -> null
+              - node_soak_duration_in_minutes = 0 -> null
+            }
+        }
+
+      - identity {
+          - identity_ids = [] -> null
+          - principal_id = "b0dcd416-ee4d-4762-a970-4340d3569f06" -> null
+          - tenant_id    = "899789dc-202f-44b4-8472-a6d40f9eb440" -> null
+          - type         = "SystemAssigned" -> null
+        }
+
+      - kubelet_identity {
+          - client_id                 = "5a21d189-44ac-4d4e-91c2-7b6d0bfeecb6" -> null
+          - object_id                 = "9e81b5f4-ad5f-45a9-ba06-0730aa5ab0dc" -> null
+          - user_assigned_identity_id = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/MC_rg-resources_aks_spaincentral/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks-agentpool" -> null
+        }
+
+      - linux_profile {
+          - admin_username = "azureuser" -> null
+
+          - ssh_key {
+              - key_data = <<-EOT
+                    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCme4S4LTo4GkYu/GV6ATen0y73iK1FlR4VwY00vcqm7tH9bxC9jPWJCsDMEkpkvMHNcKTOnPXKPEC43Wqyj7XSNfUiMcq9BET4uSGGYz1qo3/ep8wrgxCfCOGeOHzHc7Xizgk6/d8ABzT9gbqgIt8Gu1J4Oy0D1bGzcDa+i2F2i4sF5GkWu2KN67sOyPn0Bq90p8Zae3CO8ACKn2jJ+HFzi36yqEvNIgt/uhyD9utRRUM3m4usaELKXjUMg7Oiqlb06LZe77JI5bqp3PDhnMEx+5FvlCfHpbo/izqQiOwF6z7DfQOifu/tUMlU2IPyPduKIBJuCG7SayWcBLEw0Up8H7Zmp7aBM+2WKHuYxJLOFFgGXAXG0ZOK3cwSmbalVkgyjTE9kxs2YMhQetHfDlm+7GupUfO0DhFltijKPvahogxC2j54FiEQUNfs+0vcJUT6r8Le0xsVjinC0O21UkROGbsVWuxc7A1ivWfXtOT71k7aEXt0e0BXAt8ibriIQUgm12gTmJZN8UArBM40RQ+DcaO5F1q7RO0BbO4zWwzkvqHBEq7SMLdCx/C1Iq39xnEbmdvBHE5Ydi2QqMa9tQp8tR0F8O6HtKS6z6ufaYf9XK3tqv+oRtYGHBBoEyPuAlP0fjWklV5/pzFzgbHikmGGiDnMf/XndMOr5c+X9NSBGw==
+                EOT -> null
+            }
+        }
+
+      - network_profile {
+          - dns_service_ip      = "10.0.0.10" -> null
+          - ip_versions         = [
+              - "IPv4",
+            ] -> null
+          - load_balancer_sku   = "standard" -> null
+          - network_data_plane  = "azure" -> null
+          - network_plugin      = "kubenet" -> null
+          - outbound_type       = "loadBalancer" -> null
+          - pod_cidr            = "10.244.0.0/16" -> null
+          - pod_cidrs           = [
+              - "10.244.0.0/16",
+            ] -> null
+          - service_cidr        = "10.0.0.0/16" -> null
+          - service_cidrs       = [
+              - "10.0.0.0/16",
+            ] -> null
+            # (3 unchanged attributes hidden)
+
+          - load_balancer_profile {
+              - effective_outbound_ips      = [
+                  - "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/MC_rg-resources_aks_spaincentral/providers/Microsoft.Network/publicIPAddresses/17014130-dd24-47ca-bda2-d81f0a13083d",
+                ] -> null
+              - idle_timeout_in_minutes     = 0 -> null
+              - managed_outbound_ip_count   = 1 -> null
+              - managed_outbound_ipv6_count = 0 -> null
+              - outbound_ip_address_ids     = [] -> null
+              - outbound_ip_prefix_ids      = [] -> null
+              - outbound_ports_allocated    = 0 -> null
+            }
+        }
+    }
+
+  # azurerm_linux_virtual_machine.webservice will be destroyed
+  - resource "azurerm_linux_virtual_machine" "webservice" {
+      - admin_username                                         = "azureuser" -> null
+      - allow_extension_operations                             = true -> null
+      - bypass_platform_safety_checks_on_user_schedule_enabled = false -> null
+      - computer_name                                          = "webservice" -> null
+      - disable_password_authentication                        = true -> null
+      - disk_controller_type                                   = "SCSI" -> null
+      - encryption_at_host_enabled                             = false -> null
+      - extensions_time_budget                                 = "PT1H30M" -> null
+      - id                                                     = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Compute/virtualMachines/webservice" -> null
+      - location                                               = "spaincentral" -> null
+      - max_bid_price                                          = -1 -> null
+      - name                                                   = "webservice" -> null
+      - network_interface_ids                                  = [
+          - "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkInterfaces/webservice-vnic",
+        ] -> null
+      - patch_assessment_mode                                  = "ImageDefault" -> null
+      - patch_mode                                             = "ImageDefault" -> null
+      - platform_fault_domain                                  = -1 -> null
+      - priority                                               = "Regular" -> null
+      - private_ip_address                                     = "10.0.40.18" -> null
+      - private_ip_addresses                                   = [
+          - "10.0.40.18",
+        ] -> null
+      - provision_vm_agent                                     = true -> null
+      - public_ip_address                                      = "158.158.45.25" -> null
+      - public_ip_addresses                                    = [
+          - "158.158.45.25",
+        ] -> null
+      - resource_group_name                                    = "rg-resources" -> null
+      - secure_boot_enabled                                    = false -> null
+      - size                                                   = "Standard_B2ls_v2" -> null
+      - tags                                                   = {
+          - "environment" = "casopractico2"
+        } -> null
+      - virtual_machine_id                                     = "50c3d28a-e804-4273-89fe-1742e28e299c" -> null
+      - vm_agent_platform_updates_enabled                      = false -> null
+      - vtpm_enabled                                           = false -> null
+        # (13 unchanged attributes hidden)
+
+      - admin_ssh_key {
+          - public_key = <<-EOT
+                ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCme4S4LTo4GkYu/GV6ATen0y73iK1FlR4VwY00vcqm7tH9bxC9jPWJCsDMEkpkvMHNcKTOnPXKPEC43Wqyj7XSNfUiMcq9BET4uSGGYz1qo3/ep8wrgxCfCOGeOHzHc7Xizgk6/d8ABzT9gbqgIt8Gu1J4Oy0D1bGzcDa+i2F2i4sF5GkWu2KN67sOyPn0Bq90p8Zae3CO8ACKn2jJ+HFzi36yqEvNIgt/uhyD9utRRUM3m4usaELKXjUMg7Oiqlb06LZe77JI5bqp3PDhnMEx+5FvlCfHpbo/izqQiOwF6z7DfQOifu/tUMlU2IPyPduKIBJuCG7SayWcBLEw0Up8H7Zmp7aBM+2WKHuYxJLOFFgGXAXG0ZOK3cwSmbalVkgyjTE9kxs2YMhQetHfDlm+7GupUfO0DhFltijKPvahogxC2j54FiEQUNfs+0vcJUT6r8Le0xsVjinC0O21UkROGbsVWuxc7A1ivWfXtOT71k7aEXt0e0BXAt8ibriIQUgm12gTmJZN8UArBM40RQ+DcaO5F1q7RO0BbO4zWwzkvqHBEq7SMLdCx/C1Iq39xnEbmdvBHE5Ydi2QqMa9tQp8tR0F8O6HtKS6z6ufaYf9XK3tqv+oRtYGHBBoEyPuAlP0fjWklV5/pzFzgbHikmGGiDnMf/XndMOr5c+X9NSBGw==
+            EOT -> null
+          - username   = "azureuser" -> null
+        }
+
+      - os_disk {
+          - caching                          = "ReadWrite" -> null
+          - disk_size_gb                     = 30 -> null
+          - name                             = "webservice_disk1_aeda34cb8978484f9d491e2b04d1f703" -> null
+          - storage_account_type             = "Standard_LRS" -> null
+          - write_accelerator_enabled        = false -> null
+            # (3 unchanged attributes hidden)
+        }
+
+      - source_image_reference {
+          - offer     = "ubuntu-24_04-lts" -> null
+          - publisher = "Canonical" -> null
+          - sku       = "server" -> null
+          - version   = "latest" -> null
+        }
+    }
+
+  # azurerm_network_interface.webservice_vnic will be destroyed
+  - resource "azurerm_network_interface" "webservice_vnic" {
+      - accelerated_networking_enabled = false -> null
+      - applied_dns_servers            = [] -> null
+      - dns_servers                    = [] -> null
+      - id                             = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkInterfaces/webservice-vnic" -> null
+      - internal_domain_name_suffix    = "ud52eqakgreuxabs2p1utdlqhf.madx.internal.cloudapp.net" -> null
+      - ip_forwarding_enabled          = false -> null
+      - location                       = "spaincentral" -> null
+      - mac_address                    = "7C-ED-8D-64-7F-D8" -> null
+      - name                           = "webservice-vnic" -> null
+      - private_ip_address             = "10.0.40.18" -> null
+      - private_ip_addresses           = [
+          - "10.0.40.18",
+        ] -> null
+      - resource_group_name            = "rg-resources" -> null
+      - tags                           = {
+          - "environment" = "casopractico2"
+        } -> null
+      - virtual_machine_id             = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Compute/virtualMachines/webservice" -> null
+        # (4 unchanged attributes hidden)
+
+      - ip_configuration {
+          - name                                               = "subnet" -> null
+          - primary                                            = true -> null
+          - private_ip_address                                 = "10.0.40.18" -> null
+          - private_ip_address_allocation                      = "Static" -> null
+          - private_ip_address_version                         = "IPv4" -> null
+          - public_ip_address_id                               = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/publicIPAddresses/webservice-pip" -> null
+          - subnet_id                                          = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet" -> null
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # azurerm_network_interface_security_group_association.webservice_nisga will be destroyed
+  - resource "azurerm_network_interface_security_group_association" "webservice_nisga" {
+      - id                        = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkInterfaces/webservice-vnic|/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkSecurityGroups/webservice-nsg" -> null
+      - network_interface_id      = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkInterfaces/webservice-vnic" -> null
+      - network_security_group_id = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkSecurityGroups/webservice-nsg" -> null
+    }
+
+  # azurerm_network_security_group.webservice_nsg will be destroyed
+  - resource "azurerm_network_security_group" "webservice_nsg" {
+      - id                  = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkSecurityGroups/webservice-nsg" -> null
+      - location            = "spaincentral" -> null
+      - name                = "webservice-nsg" -> null
+      - resource_group_name = "rg-resources" -> null
+      - security_rule       = [
+          - {
+              - access                                     = "Allow"
+              - destination_address_prefix                 = "*"
+              - destination_address_prefixes               = []
+              - destination_application_security_group_ids = []
+              - destination_port_range                     = "22"
+              - destination_port_ranges                    = []
+              - direction                                  = "Inbound"
+              - name                                       = "ssh"
+              - priority                                   = 1002
+              - protocol                                   = "Tcp"
+              - source_address_prefix                      = "*"
+              - source_address_prefixes                    = []
+              - source_application_security_group_ids      = []
+              - source_port_range                          = "*"
+              - source_port_ranges                         = []
+                # (1 unchanged attribute hidden)
+            },
+          - {
+              - access                                     = "Allow"
+              - destination_address_prefix                 = "*"
+              - destination_address_prefixes               = []
+              - destination_application_security_group_ids = []
+              - destination_port_range                     = "8080"
+              - destination_port_ranges                    = []
+              - direction                                  = "Inbound"
+              - name                                       = "http"
+              - priority                                   = 1003
+              - protocol                                   = "Tcp"
+              - source_address_prefix                      = "*"
+              - source_address_prefixes                    = []
+              - source_application_security_group_ids      = []
+              - source_port_range                          = "*"
+              - source_port_ranges                         = []
+                # (1 unchanged attribute hidden)
+            },
+        ] -> null
+      - tags                = {
+          - "environment" = "casopractico2"
+        } -> null
+    }
+
+  # azurerm_public_ip.webservice_pip will be destroyed
+  - resource "azurerm_public_ip" "webservice_pip" {
+      - allocation_method       = "Static" -> null
+      - ddos_protection_mode    = "VirtualNetworkInherited" -> null
+      - id                      = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/publicIPAddresses/webservice-pip" -> null
+      - idle_timeout_in_minutes = 4 -> null
+      - ip_address              = "158.158.45.25" -> null
+      - ip_tags                 = {} -> null
+      - ip_version              = "IPv4" -> null
+      - location                = "spaincentral" -> null
+      - name                    = "webservice-pip" -> null
+      - resource_group_name     = "rg-resources" -> null
+      - sku                     = "Standard" -> null
+      - sku_tier                = "Regional" -> null
+      - tags                    = {
+          - "environment" = "casopractico2"
+        } -> null
+      - zones                   = [] -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # azurerm_resource_group.rg will be destroyed
+  - resource "azurerm_resource_group" "rg" {
+      - id         = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources" -> null
+      - location   = "spaincentral" -> null
+      - name       = "rg-resources" -> null
+      - tags       = {
+          - "environment" = "casopractico2"
+        } -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # azurerm_role_assignment.ra will be destroyed
+  - resource "azurerm_role_assignment" "ra" {
+      - id                                     = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.ContainerRegistry/registries/dpccontainerregistry/providers/Microsoft.Authorization/roleAssignments/0ae20b58-ef75-e24d-f265-1fd13ee8a48f" -> null
+      - name                                   = "0ae20b58-ef75-e24d-f265-1fd13ee8a48f" -> null
+      - principal_id                           = "9e81b5f4-ad5f-45a9-ba06-0730aa5ab0dc" -> null
+      - principal_type                         = "ServicePrincipal" -> null
+      - role_definition_id                     = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/providers/Microsoft.Authorization/roleDefinitions/7f951dda-4ed3-4680-a7ca-43fe172d538d" -> null
+      - role_definition_name                   = "AcrPull" -> null
+      - scope                                  = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.ContainerRegistry/registries/dpccontainerregistry" -> null
+      - skip_service_principal_aad_check       = true -> null
+        # (4 unchanged attributes hidden)
+    }
+
+  # azurerm_subnet.subnet will be destroyed
+  - resource "azurerm_subnet" "subnet" {
+      - address_prefixes                              = [
+          - "10.0.40.0/27",
+        ] -> null
+      - default_outbound_access_enabled               = true -> null
+      - id                                            = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet" -> null
+      - name                                          = "subnet" -> null
+      - private_endpoint_network_policies             = "Disabled" -> null
+      - private_link_service_network_policies_enabled = true -> null
+      - resource_group_name                           = "rg-resources" -> null
+      - service_endpoint_policy_ids                   = [] -> null
+      - service_endpoints                             = [] -> null
+      - virtual_network_name                          = "vnet" -> null
+
+      - delegation {
+          - name = "aks-delegation" -> null
+
+          - service_delegation {
+              - actions = [
+                  - "Microsoft.Network/virtualNetworks/subnets/join/action",
+                ] -> null
+              - name    = "Microsoft.ContainerService/managedClusters" -> null
+            }
+        }
+    }
+
+  # azurerm_virtual_network.vnet will be destroyed
+  - resource "azurerm_virtual_network" "vnet" {
+      - address_space           = [
+          - "10.0.40.0/24",
+        ] -> null
+      - dns_servers             = [] -> null
+      - flow_timeout_in_minutes = 0 -> null
+      - guid                    = "40c2ffa0-340a-4b49-8032-e3f7498d703d" -> null
+      - id                      = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/virtualNetworks/vnet" -> null
+      - location                = "spaincentral" -> null
+      - name                    = "vnet" -> null
+      - resource_group_name     = "rg-resources" -> null
+      - subnet                  = [
+          - {
+              - address_prefixes                              = [
+                  - "10.0.40.0/27",
+                ]
+              - default_outbound_access_enabled               = true
+              - delegation                                    = [
+                  - {
+                      - name               = "aks-delegation"
+                      - service_delegation = [
+                          - {
+                              - actions = [
+                                  - "Microsoft.Network/virtualNetworks/subnets/join/action",
+                                ]
+                              - name    = "Microsoft.ContainerService/managedClusters"
+                            },
+                        ]
+                    },
+                ]
+              - id                                            = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet"
+              - name                                          = "subnet"
+              - private_endpoint_network_policies             = "Disabled"
+              - private_link_service_network_policies_enabled = true
+              - service_endpoint_policy_ids                   = []
+              - service_endpoints                             = []
+                # (2 unchanged attributes hidden)
+            },
+        ] -> null
+      - tags                    = {
+          - "environment" = "casopractico2"
+        } -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # local_file.ansible_inventory will be destroyed
+  - resource "local_file" "ansible_inventory" {
+      - content              = <<-EOT
+            [vm]
+            158.158.45.25 ansible_user=azureuser ansible_ssh_private_key_file=~/.ssh/private_key.pem
+
+            [acr]
+            localhost ansible_connection=local
+
+            [aks]
+            localhost ansible_connection=local
+
+            [all:vars]
+            ansible_python_interpreter=/usr/bin/python3
+            ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+        EOT -> null
+      - content_base64sha256 = "LAbzU69Bl6f6KuFdFt+nz/tS468zvLyhBtL/Z6tV+fU=" -> null
+      - content_base64sha512 = "iJfqcnl5OTTDZ2n3jxkyo5xlRC3WcOjagdGgTBJaDcXYas633qSP0BkpDq6DJ+k16/fEGDYL0frAZL7FPYgpbQ==" -> null
+      - content_md5          = "aa784307ba00cb5e3e03f96512a3dc62" -> null
+      - content_sha1         = "09e301fee064fc4006032d651d507ed79f24fcea" -> null
+      - content_sha256       = "2c06f353af4197a7fa2ae15d16dfa7cffb52e3af33bcbca106d2ff67ab55f9f5" -> null
+      - content_sha512       = "8897ea7279793934c36769f78f1932a39c65442dd670e8da81d1a04c125a0dc5d86aceb7dea48fd019290eae8327e935ebf7c418360bd1fac064bec53d88296d" -> null
+      - directory_permission = "0777" -> null
+      - file_permission      = "0777" -> null
+      - filename             = "./../ansible/environments/production/inventory.azure" -> null
+      - id                   = "09e301fee064fc4006032d651d507ed79f24fcea" -> null
+    }
+
+  # local_file.kubeconfig will be destroyed
+  - resource "local_file" "kubeconfig" {
+      - content              = (sensitive value) -> null
+      - content_base64sha256 = "71RHqcRyiVPmcAkHITthxvmkOx215QFqfpNoC2TpDys=" -> null
+      - content_base64sha512 = "fxeE6/522LI8tEgh1JxhTLBit8kddVofKIVMcuiulHQXvKZKk2JU57AdE2qvBqRagBii4keZH1lAZcOdnvIfXg==" -> null
+      - content_md5          = "473eb4a12e4e78c5dfa5bed8a25fa88d" -> null
+      - content_sha1         = "73bdf7aa6c2729387c11a3a58ee4ce847f52d243" -> null
+      - content_sha256       = "ef5447a9c4728953e6700907213b61c6f9a43b1db5e5016a7e93680b64e90f2b" -> null
+      - content_sha512       = "7f1784ebfe76d8b23cb44821d49c614cb062b7c91d755a1f28854c72e8ae947417bca64a936254e7b01d136aaf06a45a8018a2e247991f594065c39d9ef21f5e" -> null
+      - directory_permission = "0777" -> null
+      - file_permission      = "0600" -> null
+      - filename             = "/home/unir/.kube/config" -> null
+      - id                   = "73bdf7aa6c2729387c11a3a58ee4ce847f52d243" -> null
+    }
+
+  # local_file.tf_ansible_vars will be destroyed
+  - resource "local_file" "tf_ansible_vars" {
+      - content              = (sensitive value) -> null
+      - content_base64sha256 = "pD7HfcwCAq9FLwnuDthL1sNukeZWp/QuPXw2ogiTayk=" -> null
+      - content_base64sha512 = "0lw0ivfSm0JnSIPOKSRrye9b7IfjPM5FKRGjc3sEFKds1Cl7UlJcFeSokfwFhzqcjV0UKZqRV0Xy7yvJjT9sPw==" -> null
+      - content_md5          = "1639bbafad26fc07a1134c69914b807b" -> null
+      - content_sha1         = "6ee369ad94da40efbbf77d2023e0c46c0e7c88b7" -> null
+      - content_sha256       = "a43ec77dcc0202af452f09ee0ed84bd6c36e91e656a7f42e3d7c36a208936b29" -> null
+      - content_sha512       = "d25c348af7d29b42674883ce29246bc9ef5bec87e33cce452911a3737b0414a76cd4297b52525c15e4a891fc05873a9c8d5d14299a915745f2ef2bc98d3f6c3f" -> null
+      - directory_permission = "0777" -> null
+      - file_permission      = "0777" -> null
+      - filename             = "./../ansible/group_vars/all.yml" -> null
+      - id                   = "6ee369ad94da40efbbf77d2023e0c46c0e7c88b7" -> null
+    }
+
+  # tls_private_key.ssh_key will be destroyed
+  - resource "tls_private_key" "ssh_key" {
+      - algorithm                     = "RSA" -> null
+      - ecdsa_curve                   = "P224" -> null
+      - id                            = "2c614e157416827f91763e1074aa511b4f563ff2" -> null
+      - private_key_openssh           = (sensitive value) -> null
+      - private_key_pem               = (sensitive value) -> null
+      - private_key_pem_pkcs8         = (sensitive value) -> null
+      - public_key_fingerprint_md5    = "d1:2d:d0:86:2d:ab:55:d1:76:83:77:a3:82:e5:63:68" -> null
+      - public_key_fingerprint_sha256 = "SHA256:/OuVaIRj+5MLn8DG+23WwwBx2Bj3LwfgPyoORIXGckw" -> null
+      - public_key_openssh            = <<-EOT
+            ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCme4S4LTo4GkYu/GV6ATen0y73iK1FlR4VwY00vcqm7tH9bxC9jPWJCsDMEkpkvMHNcKTOnPXKPEC43Wqyj7XSNfUiMcq9BET4uSGGYz1qo3/ep8wrgxCfCOGeOHzHc7Xizgk6/d8ABzT9gbqgIt8Gu1J4Oy0D1bGzcDa+i2F2i4sF5GkWu2KN67sOyPn0Bq90p8Zae3CO8ACKn2jJ+HFzi36yqEvNIgt/uhyD9utRRUM3m4usaELKXjUMg7Oiqlb06LZe77JI5bqp3PDhnMEx+5FvlCfHpbo/izqQiOwF6z7DfQOifu/tUMlU2IPyPduKIBJuCG7SayWcBLEw0Up8H7Zmp7aBM+2WKHuYxJLOFFgGXAXG0ZOK3cwSmbalVkgyjTE9kxs2YMhQetHfDlm+7GupUfO0DhFltijKPvahogxC2j54FiEQUNfs+0vcJUT6r8Le0xsVjinC0O21UkROGbsVWuxc7A1ivWfXtOT71k7aEXt0e0BXAt8ibriIQUgm12gTmJZN8UArBM40RQ+DcaO5F1q7RO0BbO4zWwzkvqHBEq7SMLdCx/C1Iq39xnEbmdvBHE5Ydi2QqMa9tQp8tR0F8O6HtKS6z6ufaYf9XK3tqv+oRtYGHBBoEyPuAlP0fjWklV5/pzFzgbHikmGGiDnMf/XndMOr5c+X9NSBGw==
+        EOT -> null
+      - public_key_pem                = <<-EOT
+            -----BEGIN PUBLIC KEY-----
+            MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEApnuEuC06OBpGLvxlegE3
+            p9Mu94itRZUeFcGNNL3Kpu7R/W8QvYz1iQrAzBJKZLzBzXCkzpz1yjxAuN1qso+1
+            0jX1IjHKvQRE+LkhhmM9aqN/3qfMK4MQnwjhnjh8x3O14s4JOv3fAAc0/YG6oCLf
+            BrtSeDstA9Wxs3A2vothdouLBeRpFrtijeu7Dsj59AavdKfGWntwjvAAip9oyfhx
+            c4t+sqhLzSILf7ocg/brUUVDN5uLrGhCyl41DIOzoqpW9Oi2Xu+ySOW6qdzw4ZzB
+            MfuRb5Qnx6W6P4s6kIjsBes+w30Don7v7VDJVNiD8j3biiASbghu0mslnASxMNFK
+            fB+2Zqe2gTPtlih7mMSSzhRYBlwFxtGTit3MEpm2pVZIMo0xPZMbNmDIUHrR3w5Z
+            vuxrqVHztA4RZbYoyj72oaIMQto+eBYhEFDX7PtL3CVE+q/C3tMbFY4pwtDttVJE
+            Thm7FVrsXOwNYr1n17Tk+9ZO2hF7dHtAVwLfIm64iEFIJtdoE5iWTfFAKwTONEUP
+            g3GjuRdau0TtAWzuM1sM5L6hwRKu0jC3QsfwtSKt/cZxG5nbwRxOWHYtkKjGvbUK
+            fLUdBfDuh7Skus+rn2mH/Vyt7ar/qEbWBhwQaBMj7gJT9H41pJVef6cxc4Gx4pJh
+            hog5zH/153TDq+XPl/TUgRsCAwEAAQ==
+            -----END PUBLIC KEY-----
+        EOT -> null
+      - rsa_bits                      = 4096 -> null
+    }
+
+Plan: 0 to add, 0 to change, 15 to destroy.
+
+Changes to Outputs:
+  - acr_password       = (sensitive value) -> null
+  - acr_url            = "dpccontainerregistry.azurecr.io" -> null
+  - acr_username       = (sensitive value) -> null
+  - aks_ca_certificate = (sensitive value) -> null
+  - aks_host           = (sensitive value) -> null
+  - aks_id             = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.ContainerService/managedClusters/aks" -> null
+  - aks_password       = (sensitive value) -> null
+  - aks_username       = (sensitive value) -> null
+  - client_certificate = (sensitive value) -> null
+  - client_key         = (sensitive value) -> null
+  - kube_config        = (sensitive value) -> null
+  - resource_group_id  = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources" -> null
+  - ssh_private_key    = (sensitive value) -> null
+  - webservice_id      = "/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Compute/virtualMachines/webservice" -> null
+  - webservice_pip     = "158.158.45.25" -> null
+local_file.tf_ansible_vars: Destroying... [id=6ee369ad94da40efbbf77d2023e0c46c0e7c88b7]
+local_file.kubeconfig: Destroying... [id=73bdf7aa6c2729387c11a3a58ee4ce847f52d243]
+local_file.ansible_inventory: Destroying... [id=09e301fee064fc4006032d651d507ed79f24fcea]
+local_file.tf_ansible_vars: Destruction complete after 0s
+local_file.ansible_inventory: Destruction complete after 1s
+local_file.kubeconfig: Destruction complete after 1s
+azurerm_role_assignment.ra: Destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.ContainerRegistry/registries/dpccontainerregistry/providers/Microsoft.Authorization/roleAssignments/0ae20b58-ef75-e24d-f265-1fd13ee8a48f]
+azurerm_network_interface_security_group_association.webservice_nisga: Destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkInterfaces/webservice-vnic|/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkSecurityGroups/webservice-nsg]
+azurerm_linux_virtual_machine.webservice: Destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Compute/virtualMachines/webservice]
+azurerm_network_interface_security_group_association.webservice_nisga: Destruction complete after 3s
+azurerm_network_security_group.webservice_nsg: Destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkSecurityGroups/webservice-nsg]
+azurerm_role_assignment.ra: Destruction complete after 3s
+azurerm_container_registry.acr: Destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.ContainerRegistry/registries/dpccontainerregistry]
+azurerm_kubernetes_cluster.aks: Destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.ContainerService/managedClusters/aks]
+azurerm_linux_virtual_machine.webservice: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...oft.Compute/virtualMachines/webservice, 00m11s elapsed]
+azurerm_network_security_group.webservice_nsg: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...k/networkSecurityGroups/webservice-nsg, 00m10s elapsed]
+azurerm_container_registry.acr: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...gistry/registries/dpccontainerregistry, 00m10s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 00m10s elapsed]
+azurerm_network_security_group.webservice_nsg: Destruction complete after 11s
+azurerm_container_registry.acr: Destruction complete after 11s
+azurerm_linux_virtual_machine.webservice: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...oft.Compute/virtualMachines/webservice, 00m21s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 00m20s elapsed]
+azurerm_linux_virtual_machine.webservice: Destruction complete after 29s
+azurerm_network_interface.webservice_vnic: Destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/networkInterfaces/webservice-vnic]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 00m30s elapsed]
+azurerm_network_interface.webservice_vnic: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...work/networkInterfaces/webservice-vnic, 00m10s elapsed]
+azurerm_network_interface.webservice_vnic: Destruction complete after 11s
+azurerm_subnet.subnet: Destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet]
+azurerm_public_ip.webservice_pip: Destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/publicIPAddresses/webservice-pip]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 00m41s elapsed]
+azurerm_subnet.subnet: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...rk/virtualNetworks/vnet/subnets/subnet, 00m11s elapsed]
+azurerm_public_ip.webservice_pip: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...twork/publicIPAddresses/webservice-pip, 00m10s elapsed]
+azurerm_public_ip.webservice_pip: Destruction complete after 10s
+azurerm_subnet.subnet: Destruction complete after 11s
+azurerm_virtual_network.vnet: Destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources/providers/Microsoft.Network/virtualNetworks/vnet]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 00m51s elapsed]
+azurerm_virtual_network.vnet: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...Microsoft.Network/virtualNetworks/vnet, 00m10s elapsed]
+azurerm_virtual_network.vnet: Destruction complete after 11s
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 01m02s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 01m12s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 01m22s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 01m32s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 01m42s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 01m52s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 02m02s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 02m12s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 02m22s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 02m32s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 02m42s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 02m52s elapsed]
+azurerm_kubernetes_cluster.aks: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-...t.ContainerService/managedClusters/aks, 03m02s elapsed]
+azurerm_kubernetes_cluster.aks: Destruction complete after 3m7s
+azurerm_resource_group.rg: Destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources]
+tls_private_key.ssh_key: Destroying... [id=2c614e157416827f91763e1074aa511b4f563ff2]
+tls_private_key.ssh_key: Destruction complete after 0s
+azurerm_resource_group.rg: Still destroying... [id=/subscriptions/6582d274-292d-4e52-bbf9-4e27f466a0ba/resourceGroups/rg-resources, 00m10s elapsed]
+azurerm_resource_group.rg: Destruction complete after 16s
+
+Destroy complete! Resources: 15 destroyed.

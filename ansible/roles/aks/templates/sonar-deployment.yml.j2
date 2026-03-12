@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ deployment.name }}
+  namespace: {{ k8s_namespace }}
+  labels:
+    app: {{ deployment.name }}
+spec:
+  replicas: {{ deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ deployment.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ deployment.name }}
+    spec:
+      imagePullSecrets:
+        - name: acr-secret
+      terminationGracePeriodSeconds: {{ deployment.terminationGracePeriodSeconds }}
+      initContainers:
+        - name: init-sysctl
+          image: busybox:latest
+          command: [ "sysctl", "-w", "vm.max_map_count=262144" ]
+          securityContext:
+            privileged: true
+        - name: {{ deployment.initContainers.name }}-extension
+          image: {{ deployment.initContainers.image }}
+          command:
+            - sh
+            - -c
+            - chown -R 1000:1000 /opt/sonarqube/extensions
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: {{ deployment.initContainers.volumeMounts.name }}-extensions
+              mountPath: {{ deployment.initContainers.volumeMounts.mountPath }}/extensions
+        - name: {{ deployment.initContainers.name }}-data
+          image: {{ deployment.initContainers.image }}
+          command:
+            - sh
+            - -c
+            - chown -R 1000:1000 /opt/sonarqube/data
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: {{ deployment.initContainers.volumeMounts.name }}-data
+              mountPath: {{ deployment.initContainers.volumeMounts.mountPath }}/data
+      containers:
+        - name: {{ deployment.name }}
+          image: {{ deployment.image }}
+          resources:
+            requests:
+              cpu: {{ deployment.containers.resources.cpu }}
+              memory: {{ deployment.containers.resources.memory }}
+            limits:
+              cpu: {{ deployment.containers.limits.cpu }}
+              memory: {{ deployment.containers.limits.memory }}
+          ports:
+            - name: {{ deployment.containers.ports.name }}
+              containerPort: {{ deployment.containers.ports.containerPort }}
+          env:
+            - name: SONAR_JDBC_USERNAME
+              value: {{ deployment.containers.env.username }}
+            - name: SONAR_JDBC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: password
+            - name: SONAR_JDBC_URL
+              value: {{ deployment.containers.env.url }}
+          volumeMounts:
+            - mountPath: {{ deployment.initContainers.volumeMounts.mountPath }}/data/
+              name: {{ deployment.initContainers.volumeMounts.name }}-data
+            - mountPath: {{ deployment.initContainers.volumeMounts.mountPath }}/extensions/
+              name: {{ deployment.initContainers.volumeMounts.name }}-extensions
+      volumes:
+        - name: {{ deployment.initContainers.volumeMounts.name }}-data
+          persistentVolumeClaim:
+            claimName: {{ deployment.initContainers.volumeMounts.name }}-data
+        - name: {{ deployment.initContainers.volumeMounts.name }}-extensions
+          persistentVolumeClaim:
+            claimName: {{ deployment.initContainers.volumeMounts.name }}-extensions

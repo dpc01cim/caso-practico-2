@@ -1,0 +1,9 @@
+---
+# URL for ACR.
+acr_url: registry.unir.net
+# Username for ACR.
+acr_username: admin
+
+# Tag for container image.
+tag_image: casopractico2
+...

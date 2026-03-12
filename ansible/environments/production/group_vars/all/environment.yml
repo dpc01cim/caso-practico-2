@@ -1,0 +1,6 @@
+---
+# This file contains group vars in the production environment.
+
+# Tag for container image.
+tag_image: casopractico2
+...

@@ -1,0 +1,63 @@
+---
+# Installation block with a specific tag to avoid unnecessary repetitions
+# https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/apt_module.html
+- name: Setup local environment
+  block:
+    - name: Install podman and tools
+      ansible.builtin.apt:
+        name: "{{ podman_packages }}"
+        state: present
+      become: true
+  tags: setup_local
+  when: inventory_hostname == 'localhost'
+
+# Azure Container Registry (ACR) tasks
+# https://docs.ansible.com/projects/ansible/latest/collections/containers/podman/podman_login_module.html
+- name: Login to ACR
+  containers.podman.podman_login:
+    registry: "{{ acr_url }}"
+    username: "{{ acr_username }}"
+    password: "{{ acr_password }}"
+  tags: acr_push
+
+# https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_image_module.html
+# https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_tag_module.html
+- name: Pull, Tag and Push images
+  block:
+    - name: Pull images from public registry
+      containers.podman.podman_image:
+        name: "{{ item.src }}"
+        state: present
+      loop: "{{ acr_images }}"
+
+    - name: Tag images for ACR
+      containers.podman.podman_tag:
+        image: "{{ item.src }}"
+        target_names:
+          - "{{ acr_url }}/{{ item.dest }}:{{ tag_image }}"
+      loop: "{{ acr_images }}"
+
+    - name: Push images to ACR using existing credentials
+      containers.podman.podman_image:
+        name: "{{ acr_url }}/{{ item.dest }}:{{ tag_image }}"
+        push: yes
+        username: "{{ acr_username }}"
+        password: "{{ acr_password }}"
+        tlsverify: no
+      loop: "{{ acr_images }}"
+  tags: acr_push
+
+- name: Remove ACR tagged images from local storage
+  containers.podman.podman_image:
+    name: "{{ acr_url }}/{{ item.dest }}:{{ tag_image }}"
+    state: absent
+  loop: "{{ acr_images }}"
+  tags: clean_images
+
+- name: Remove source images (DockerHub) from local storage
+  containers.podman.podman_image:
+    name: "{{ item.src }}"
+    state: absent
+  loop: "{{ acr_images }}"
+  tags: clean_images
+...

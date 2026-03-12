@@ -1,0 +1,7 @@
+FROM {{ podman_image }}
+COPY index.html {{ server_container_path }}/htdocs/
+COPY .htaccess {{ server_container_path }}/htdocs/
+COPY httpd.conf {{ server_container_path }}/conf/
+COPY .creds {{ server_container_path }}/
+COPY {{ server_hostname }}.key {{ server_container_path }}/
+COPY {{ server_hostname }}.crt {{ server_container_path }}/

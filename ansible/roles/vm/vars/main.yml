@@ -1,0 +1,11 @@
+---
+# vars file for vm
+
+# Username webservice access.
+username: dpc-unir
+# Password webservice access.
+password: t3st-un1r
+
+# The algorithm used to generate the TLS/SSL private key.
+key_type: RSA
+...

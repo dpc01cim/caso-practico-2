@@ -1,0 +1,59 @@
+---
+# defaults file for vm
+
+# Packages necessary to install.
+apt_packages:
+  - apache2-utils
+  - openssl
+  - podman
+  - skopeo
+  - python3-passlib
+  - python3-openssl
+
+# Default username for webservice access.
+username: test
+# Default password for webservice access.
+password: test
+
+# Path in which webserver deploy.
+webserver_path: /opt/webserver
+
+# Server container path.
+server_container_path: /usr/local/apache2
+
+# File in which the generated TLS/SSL private key.
+server_hostname: ws-caso-practico-2
+
+# Size (in bits) of the TLS/SSL key to generate.
+key_size: 2048
+# The passphrase for the private key.
+passphrase:
+# Default algorithm used to generate the TLS/SSL private key.
+key_type: RSA
+
+# Configuration container templates.
+container_templates:
+  - { src_path: 'templates', file_name: 'index.html' }
+  - { src_path: 'templates', file_name: '.htaccess' }
+  - { src_path: 'templates', file_name: 'httpd.conf' }
+  - { src_path: 'templates', file_name: 'Containerfile' }
+
+# Name for container image.
+podman_image: "{{ acr_url }}/library/httpd:{{ tag_image }}"
+# Tag for container image.
+tag_image: casopractico2
+# Name for custom webserver image.
+custom_image: "/custom/webserver"
+
+# Path for container systemd service.
+container_web_service: /etc/systemd/system/
+# Container systemd service name.
+container_prefix: container
+
+# Default URL for ACR.
+acr_url: registry.unir.net
+# Default Username for ACR.
+acr_username: admin
+# DefaultPassword for ACR.
+acr_password: Harbor54321
+...

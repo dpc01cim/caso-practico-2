@@ -1,0 +1,24 @@
+---
+# defaults file for acr
+
+# Podman packages to install.
+podman_packages:
+  - podman
+  - skopeo
+
+# Default URL for ACR.
+acr_url: container.registry.unir.net
+# Default Username for ACR.
+acr_username: username
+# DefaultPassword for ACR.
+acr_password: test12345
+
+# Images list to upload ACR for AKS.
+acr_images:
+  - { src: "docker.io/library/httpd:alpine", dest: "library/httpd" }
+  - { src: "docker.io/library/sonarqube:community", dest: "library/sonarqube" }
+  - { src: "docker.io/library/postgres:17.9-alpine", dest: "library/postgres" }
+
+# Tag for container image.
+tag_image: casopractico2
+...

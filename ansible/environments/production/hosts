@@ -1,0 +1,15 @@
+[vm]
+# La IP de la Virtual Machine donde esta el Webserver (Apache)
+${webservice_pip} ansible_user=azureuser ansible_ssh_private_key_file=~/.ssh/private_key.pem
+
+[acr]
+# Las tareas de Podman Pull/Push se hacen localmente
+localhost ansible_connection=local
+
+[aks]
+# Las tareas de Kubernetes también se lanzan desde local hacia la API del AKS
+localhost ansible_connection=local
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'

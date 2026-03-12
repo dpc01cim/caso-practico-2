@@ -1,0 +1,17 @@
+[all:vars]
+# Configuración de K8s para MicroK8s
+k8s_kubeconfig="/var/snap/microk8s/current/credentials/client.config"
+
+# Compatibilidad con Python en Ubuntu
+ansible_python_interpreter=/usr/bin/python3
+
+host_key_checking=False
+
+[vm]
+localhost ansible_connection=local
+
+[acr]
+localhost ansible_connection=local
+
+[aks]
+localhost ansible_connection=local

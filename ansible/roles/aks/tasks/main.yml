@@ -1,0 +1,61 @@
+---
+# Installation necessary python packages and tools
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pip_module.html
+- name: Setup local environment
+  block:
+    - name: Install python3-pip
+      ansible.builtin.apt:
+        name: python3-pip
+        state: latest
+
+    - name: Install python pre-requisites packages
+      ansible.builtin.pip:
+        name: "{{ pip_packages }}"
+
+  when: inventory_hostname == 'localhost'
+  tags: setup_local
+
+# Deploy SonarQube and Postgres in AKS
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
+- name: Create k8s temporary directory
+  ansible.builtin.file:
+    path: "{{ k8s_path }}"
+    state: directory
+  register: k8s_temp
+  tags: deploy_aks
+
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html
+- name: Define PersistentVolumeClaim, secrets, deployment and services objects
+  template:
+    src: "templates/{{ item }}.j2"
+    dest: "{{ k8s_path }}/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop: "{{ k8s_templates }}"
+  tags: deploy_aks
+
+# https://docs.ansible.com/ansible/latest/collections/kubernetes/core/k8s_module.html
+- name: Create a k8s namespace
+  kubernetes.core.k8s:
+    kind: Namespace
+    name: "{{ k8s_namespace }}"
+    kubeconfig: "{{ kubeconfig_path }}"
+  tags: deploy_aks
+
+- name: Create a Deployment by reading the definition from a template
+  kubernetes.core.k8s:
+    state: present
+    src: "{{ k8s_path }}/{{ item }}"
+    kubeconfig: "{{ kubeconfig_path }}"
+  loop: "{{ k8s_templates }}"
+  tags: deploy_aks
+
+- name: Remove k8s temporary directory
+  ansible.builtin.file:
+    path: "{{ k8s_temp.path }}"
+    state: absent
+  when: k8s_temp.path is defined
+  tags: deploy_aks
+...
